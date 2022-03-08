@@ -1,0 +1,18 @@
+{
+  "name": "betshop-printer",
+  "version": "1.0.0",
+  "description": "Meridianbet printing solution",
+  "main": "index.js",
+  "scripts": {
+    "compile": "node-gyp rebuild",
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nan": "^2.15.0",
+    "node-gyp": "^8.4.1"
+  },
+  "gypfile": true
+}

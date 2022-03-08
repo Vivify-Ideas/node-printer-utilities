@@ -1,0 +1,1 @@
+cmd_Release/betshop_printer.node := ln -f "Release/obj.target/betshop_printer.node" "Release/betshop_printer.node" 2>/dev/null || (rm -rf "Release/betshop_printer.node" && cp -af "Release/obj.target/betshop_printer.node" "Release/betshop_printer.node")

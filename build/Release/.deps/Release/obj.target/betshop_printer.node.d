@@ -1,0 +1,1 @@
+cmd_Release/obj.target/betshop_printer.node := g++ -o Release/obj.target/betshop_printer.node -shared -pthread -rdynamic -m64 -lcups  -Wl,-soname=betshop_printer.node -Wl,--start-group Release/obj.target/betshop_printer/src/betshop_printer.o -Wl,--end-group -lcups -ludev
