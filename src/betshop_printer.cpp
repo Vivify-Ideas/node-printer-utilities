@@ -16,6 +16,12 @@ FUNCTION_TO_EXPORT(GetDefaultPrinter) {
   FUNCTION_SET_RETURN_VALUE(default_printer_result);
 }
 
+FUNCTION_TO_EXPORT(SendToPrinter) {
+  int jobId = cupsPrintFile2(CUPS_HTTP_DEFAULT, "tiket", "../test.pdf", "tiketTitle", 0, NULL);
+
+  FUNCTION_SET_RETURN_VALUE(Nan::New<v8::Number>(jobId));
+}
+
 v8::Local<v8::Object> GetDefaultPrinterObject(cups_dest_t *printer, int printers_size) {
   v8::Local<v8::Object> default_printer_result = V8_NEW_OBJECT();
   for(int i = 0; i < printers_size; ++i, ++printer) {
@@ -116,6 +122,7 @@ void BuildInitialDeviceList() {
 void Init(v8::Local<v8::Object> exports) {
   v8::Local<v8::Context> context = Nan::GetCurrentContext();
   FUNCTION_EXPORT(context, GetDefaultPrinter, "getDefaultPrinter");
+  FUNCTION_EXPORT(context, SendToPrinter, "sendToPrinter");
 }
 
 NODE_MODULE(betshop_printer, Init)

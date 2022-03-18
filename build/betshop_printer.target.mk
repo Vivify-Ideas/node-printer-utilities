@@ -44,13 +44,13 @@ CFLAGS_CC_Debug := \
 	-std=gnu++14
 
 INCS_Debug := \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/include/node \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/src \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/openssl/config \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/openssl/openssl/include \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/uv/include \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/zlib \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/v8/include \
+	-I/home/nikola/.cache/node-gyp/16.13.1/include/node \
+	-I/home/nikola/.cache/node-gyp/16.13.1/src \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/openssl/config \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/openssl/openssl/include \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/uv/include \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/zlib \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/v8/include \
 	-I$(srcdir)/node_modules/nan
 
 DEFS_Release := \
@@ -92,13 +92,13 @@ CFLAGS_CC_Release := \
 	-std=gnu++14
 
 INCS_Release := \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/include/node \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/src \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/openssl/config \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/openssl/openssl/include \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/uv/include \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/zlib \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/v8/include \
+	-I/home/nikola/.cache/node-gyp/16.13.1/include/node \
+	-I/home/nikola/.cache/node-gyp/16.13.1/src \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/openssl/config \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/openssl/openssl/include \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/uv/include \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/zlib \
+	-I/home/nikola/.cache/node-gyp/16.13.1/deps/v8/include \
 	-I$(srcdir)/node_modules/nan
 
 OBJS := \
