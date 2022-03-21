@@ -4,8 +4,8 @@ function getDefaultPrinter() {
     return betshop_printer.getDefaultPrinter();
 }
 
-function sendToPrinter() {
-    return betshop_printer.sendToPrinter();
+function sendToPrinter(html) {
+    return betshop_printer.sendToPrinter(html);
 }
 
 module.exports.getDefaultPrinter = getDefaultPrinter;

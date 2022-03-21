@@ -1,4 +1,6 @@
 #include "betshop_printer.h"
+#include <fstream>
+using namespace std;
 
 static udev *udev;
 static udev_enumerate *enumerate;
@@ -17,9 +19,18 @@ FUNCTION_TO_EXPORT(GetDefaultPrinter) {
 }
 
 FUNCTION_TO_EXPORT(SendToPrinter) {
-  int jobId = cupsPrintFile2(CUPS_HTTP_DEFAULT, "tiket", "../test.pdf", "tiketTitle", 0, NULL);
+  Nan::HandleScope scope;
+  Nan::Utf8String html(info[0]->ToString(Nan::GetCurrentContext()).FromMaybe(v8::Local<v8::String>()));
 
-  FUNCTION_SET_RETURN_VALUE(Nan::New<v8::Number>(jobId));
+  ConvertHtmlToPdf(*html);
+
+  // int num_options = 0;
+  // cups_option_t *options;
+  // num_options = cupsAddOption("type", "PDF", 0, &options);
+
+  int jobId = cupsPrintFile2(CUPS_HTTP_DEFAULT, "tiket", "test.pdf", "tiketTitle", 0, NULL);
+  // cupsFreeOptions(num_options, options);
+  FUNCTION_SET_RETURN_VALUE(jobId);
 }
 
 v8::Local<v8::Object> GetDefaultPrinterObject(cups_dest_t *printer, int printers_size) {

@@ -25,12 +25,13 @@
             '<!(cups-config --libs)'
           ],
           'libraries':[
-            '<!(cups-config --libs)'
+            '<!(cups-config --libs)',
           ],
           'link_settings': {
             'libraries': [
               '<!(cups-config --libs)',
-              '-ludev'
+              '-ludev',
+              '/usr/local/lib/libwkhtmltox.so.0'
             ]
           }
         }]

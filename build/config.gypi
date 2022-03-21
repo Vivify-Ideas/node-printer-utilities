@@ -342,17 +342,17 @@
     "v8_trace_maps": 0,
     "v8_use_siphash": 1,
     "want_separate_host_toolset": 0,
-    "nodedir": "/home/nikola/.cache/node-gyp/16.13.1",
+    "nodedir": "/home/dhvp/.cache/node-gyp/16.13.1",
     "standalone_static_library": 1,
     "user_agent": "npm/8.1.2 node/v16.13.1 linux x64 workspaces/false",
-    "userconfig": "/home/nikola/.npmrc",
-    "local_prefix": "/home/nikola/Code/betshop-printer-utility",
+    "userconfig": "/home/dhvp/.npmrc",
+    "local_prefix": "/home/dhvp/Projekti/meridianbet/betshop-printer",
     "metrics_registry": "https://registry.npmjs.org/",
-    "prefix": "/home/nikola/.nvm/versions/node/v16.13.1",
-    "cache": "/home/nikola/.npm",
-    "node_gyp": "/home/nikola/.nvm/versions/node/v16.13.1/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
-    "globalconfig": "/home/nikola/.nvm/versions/node/v16.13.1/etc/npmrc",
-    "init_module": "/home/nikola/.npm-init.js",
-    "global_prefix": "/home/nikola/.nvm/versions/node/v16.13.1"
+    "prefix": "/home/dhvp/.nvm/versions/node/v16.13.1",
+    "cache": "/home/dhvp/.npm",
+    "node_gyp": "/home/dhvp/.nvm/versions/node/v16.13.1/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
+    "globalconfig": "/home/dhvp/.nvm/versions/node/v16.13.1/etc/npmrc",
+    "init_module": "/home/dhvp/.npm-init.js",
+    "global_prefix": "/home/dhvp/.nvm/versions/node/v16.13.1"
   }
 }

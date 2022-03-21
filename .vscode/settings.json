@@ -11,6 +11,8 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "iosfwd": "cpp",
+        "*.inc": "cpp"
     }
 }
