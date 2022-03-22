@@ -1,31 +1,51 @@
 #include "html_to_pdf.h"
 
-/* Print a message to stderr when an error occurs */
+wkhtmltopdf_converter* converter = NULL;
+wkhtmltopdf_global_settings* global_settings;
+wkhtmltopdf_object_settings* object_settings;
+
 void error(wkhtmltopdf_converter * c, const char * msg) {
 	fprintf(stderr, "Error: %s\n", msg);
 }
 
-void ConvertHtmlToPdf(char* html) {
-  wkhtmltopdf_global_settings * gs;
-	wkhtmltopdf_object_settings * os;
-	wkhtmltopdf_converter * c;
+void warning(wkhtmltopdf_converter * c, const char * msg) {
+	fprintf(stderr, "Warning: %s\n", msg);
+}
 
-	wkhtmltopdf_init(false);
-	gs = wkhtmltopdf_create_global_settings();
-	wkhtmltopdf_set_global_setting(gs, "out", "test.pdf");
-	os = wkhtmltopdf_create_object_settings();
+void InitSettings() {
+	wkhtmltopdf_init(true);
+}
 
-  wkhtmltopdf_set_object_setting(os, "page", html);
-  c = wkhtmltopdf_create_converter(gs);
-  
-  wkhtmltopdf_add_object(c, os, NULL);
+void DeinitSettings() {
+  wkhtmltopdf_deinit();
+}
 
-  wkhtmltopdf_set_error_callback(c, error);
+void ConvertHtmlToPdf(char* html, char* page_height, char* page_width) {
 
-  if (!wkhtmltopdf_convert(c)) {
+	global_settings = wkhtmltopdf_create_global_settings();
+	wkhtmltopdf_set_global_setting(global_settings, "out", "test.pdf");
+	wkhtmltopdf_set_global_setting(global_settings, "margin.top", "0");
+	wkhtmltopdf_set_global_setting(global_settings, "margin.bottom", "0");
+	wkhtmltopdf_set_global_setting(global_settings, "margin.left", "0");
+	wkhtmltopdf_set_global_setting(global_settings, "margin.right", "0");
+	wkhtmltopdf_set_global_setting(global_settings, "size.height", page_height);
+	wkhtmltopdf_set_global_setting(global_settings, "size.width", page_width);
+
+	object_settings = wkhtmltopdf_create_object_settings();
+
+  wkhtmltopdf_set_object_setting(object_settings, "page", html);
+
+  converter = wkhtmltopdf_create_converter(global_settings);
+  wkhtmltopdf_add_object(converter, object_settings, NULL);
+
+  wkhtmltopdf_set_error_callback(converter, error);
+  wkhtmltopdf_set_warning_callback(converter, warning);
+
+  if (!wkhtmltopdf_convert(converter)) {
     printf("Convertion failed!");
   }
 
-  wkhtmltopdf_destroy_converter(c);
-  wkhtmltopdf_deinit();
+  wkhtmltopdf_destroy_global_settings(global_settings);
+  wkhtmltopdf_destroy_object_settings(object_settings);
+  wkhtmltopdf_destroy_converter(converter);
 }

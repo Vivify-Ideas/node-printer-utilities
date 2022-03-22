@@ -1,4 +1,4 @@
-const { getDefaultPrinter, sendToPrinter } = require(".");
+const { getDefaultPrinter, sendToPrinter, initSettings, deinitSettings } = require(".");
 
 // console.log(getDefaultPrinter());
 
@@ -907,4 +907,5 @@ html {
 
  </body></html>`
 
- console.log(sendToPrinter(html));
+ initSettings();
+console.log(sendToPrinter(html, "15cm", "10.4cm"));

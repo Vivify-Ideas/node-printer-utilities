@@ -22,10 +22,13 @@ FUNCTION_TO_EXPORT(GetDefaultPrinter) {
 FUNCTION_TO_EXPORT(SendToPrinter) {
   Nan::HandleScope scope;
   Nan::Utf8String html(V8_LOCAL_STRING_FROM_VALUE(info[0]));
+  Nan::Utf8String page_height(V8_LOCAL_STRING_FROM_VALUE(info[1]));
+  Nan::Utf8String page_width(V8_LOCAL_STRING_FROM_VALUE(info[2]));
+
   double sum = 0;
   auto begin = std::chrono::high_resolution_clock::now();
 
-  ConvertHtmlToPdf(*html);
+  ConvertHtmlToPdf(*html, *page_height, *page_width);
   int job_id = PrintPdfDocument();
 
   auto end = std::chrono::high_resolution_clock::now();
@@ -37,8 +40,7 @@ FUNCTION_TO_EXPORT(SendToPrinter) {
 
 int PrintPdfDocument() {
   cups_dest_t *dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
-  if (dest == NULL)
-  {
+  if (dest == NULL) {
     printf("Default printer is not connected.\n");
     return 0;
   }
@@ -50,10 +52,20 @@ int PrintPdfDocument() {
   // num_options = cupsAddOption(CUPS_MEDIA, CUPS_MEDIA_A4, num_options, &options);
 
   int job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "test.pdf", "test", num_options, options);
-  cupsFreeOptions(num_options, options);
+  // int job_id = cupsPrintFile(dest->name, "test.pdf", "test", num_options, options);
+  // cupsFreeOptions(num_options, options);
 
   return job_id;
 }
+
+FUNCTION_TO_EXPORT(InitSettings) {
+  InitSettings();
+}
+
+FUNCTION_TO_EXPORT(DeinitSettings) {
+  DeinitSettings();
+}
+
 v8::Local<v8::Object> GetDefaultPrinterObject(cups_dest_t *printer, int printers_size) {
   v8::Local<v8::Object> default_printer_result = V8_NEW_OBJECT();
   for(int i = 0; i < printers_size; ++i, ++printer) {
@@ -155,6 +167,8 @@ void Init(v8::Local<v8::Object> exports) {
   v8::Local<v8::Context> context = Nan::GetCurrentContext();
   FUNCTION_EXPORT(context, GetDefaultPrinter, "getDefaultPrinter");
   FUNCTION_EXPORT(context, SendToPrinter, "sendToPrinter");
+  FUNCTION_EXPORT(context, InitSettings, "initSettings");
+  FUNCTION_EXPORT(context, DeinitSettings, "deinitSettings");
 }
 
 NODE_MODULE(betshop_printer, Init)
