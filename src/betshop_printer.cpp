@@ -1,5 +1,6 @@
 #include "betshop_printer.h"
-#include <fstream>
+#include <chrono>
+
 using namespace std;
 
 static udev *udev;
@@ -20,17 +21,31 @@ FUNCTION_TO_EXPORT(GetDefaultPrinter) {
 
 FUNCTION_TO_EXPORT(SendToPrinter) {
   Nan::HandleScope scope;
-  Nan::Utf8String html(info[0]->ToString(Nan::GetCurrentContext()).FromMaybe(v8::Local<v8::String>()));
+  Nan::Utf8String html(V8_LOCAL_STRING_FROM_VALUE(info[0]));
+  double sum = 0;
+  auto begin = std::chrono::high_resolution_clock::now();
 
   ConvertHtmlToPdf(*html);
+  int job_id = PrintPdfDocument();
 
-  // int num_options = 0;
-  // cups_option_t *options;
-  // num_options = cupsAddOption("type", "PDF", 0, &options);
+  auto end = std::chrono::high_resolution_clock::now();
+  auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+  printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
 
-  int jobId = cupsPrintFile2(CUPS_HTTP_DEFAULT, "tiket", "test.pdf", "tiketTitle", 0, NULL);
-  // cupsFreeOptions(num_options, options);
-  FUNCTION_SET_RETURN_VALUE(jobId);
+  FUNCTION_SET_RETURN_VALUE(job_id);
+}
+
+int PrintPdfDocument() {
+  int num_options = 0;
+  cups_option_t *options = NULL;
+
+  // num_options = cupsAddOption(CUPS_COPIES, "1", num_options, &options);
+  // num_options = cupsAddOption(CUPS_MEDIA, CUPS_MEDIA_A4, num_options, &options);
+
+  int job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, "XP-80", "test.pdf", "test", num_options, options);
+  cupsFreeOptions(num_options, options);
+
+  return job_id;
 }
 
 v8::Local<v8::Object> GetDefaultPrinterObject(cups_dest_t *printer, int printers_size) {

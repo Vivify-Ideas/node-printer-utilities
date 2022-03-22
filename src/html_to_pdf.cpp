@@ -1,4 +1,4 @@
-#include <wkhtmltox/pdf.h>
+#include "html_to_pdf.h"
 
 /* Print a message to stderr when an error occurs */
 void error(wkhtmltopdf_converter * c, const char * msg) {
