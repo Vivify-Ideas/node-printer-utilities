@@ -36,18 +36,24 @@ FUNCTION_TO_EXPORT(SendToPrinter) {
 }
 
 int PrintPdfDocument() {
+  cups_dest_t *dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
+  if (dest == NULL)
+  {
+    printf("Default printer is not connected.\n");
+    return 0;
+  }
+
   int num_options = 0;
   cups_option_t *options = NULL;
 
   // num_options = cupsAddOption(CUPS_COPIES, "1", num_options, &options);
   // num_options = cupsAddOption(CUPS_MEDIA, CUPS_MEDIA_A4, num_options, &options);
 
-  int job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, "XP-80", "test.pdf", "test", num_options, options);
+  int job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "test.pdf", "test", num_options, options);
   cupsFreeOptions(num_options, options);
 
   return job_id;
 }
-
 v8::Local<v8::Object> GetDefaultPrinterObject(cups_dest_t *printer, int printers_size) {
   v8::Local<v8::Object> default_printer_result = V8_NEW_OBJECT();
   for(int i = 0; i < printers_size; ++i, ++printer) {
