@@ -908,4 +908,4 @@ html {
  </body></html>`
 
  initSettings();
-console.log(sendToPrinter(html, "15cm", "10.4cm"));
+console.log(sendToPrinter(html, "15cm", "10.4cm", "Custom.104x183.6mm"));

@@ -27,4 +27,4 @@ v8::Local<v8::Object> GetDefaultPrinterObject(cups_dest_t *printer, int printers
 v8::Local<v8::Object> FormatPrinterOptions(cups_option_t *options, int option_size);
 void BuildInitialDeviceList();
 void ConvertHtmlToPdf(char* html);
-int PrintPdfDocument();
+int PrintPdfDocument(char* papier_size);

@@ -24,12 +24,13 @@ FUNCTION_TO_EXPORT(SendToPrinter) {
   Nan::Utf8String html(V8_LOCAL_STRING_FROM_VALUE(info[0]));
   Nan::Utf8String page_height(V8_LOCAL_STRING_FROM_VALUE(info[1]));
   Nan::Utf8String page_width(V8_LOCAL_STRING_FROM_VALUE(info[2]));
+  Nan::Utf8String papier_size(V8_LOCAL_STRING_FROM_VALUE(info[3]));
 
   double sum = 0;
   auto begin = std::chrono::high_resolution_clock::now();
 
   ConvertHtmlToPdf(*html, *page_height, *page_width);
-  int job_id = PrintPdfDocument();
+  int job_id = PrintPdfDocument(*papier_size);
 
   auto end = std::chrono::high_resolution_clock::now();
   auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
@@ -38,7 +39,8 @@ FUNCTION_TO_EXPORT(SendToPrinter) {
   FUNCTION_SET_RETURN_VALUE(job_id);
 }
 
-int PrintPdfDocument() {
+int PrintPdfDocument(char* papier_size) {
+ 
   cups_dest_t *dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
   if (dest == NULL) {
     printf("Default printer is not connected.\n");
@@ -47,9 +49,9 @@ int PrintPdfDocument() {
 
   int num_options = 0;
   cups_option_t *options = NULL;
-
+ printf(papier_size);
   // num_options = cupsAddOption(CUPS_COPIES, "1", num_options, &options);
-  // num_options = cupsAddOption(CUPS_MEDIA, CUPS_MEDIA_A4, num_options, &options);
+  num_options = cupsAddOption(CUPS_MEDIA, papier_size, num_options, &options);
 
   int job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "test.pdf", "test", num_options, options);
   // int job_id = cupsPrintFile(dest->name, "test.pdf", "test", num_options, options);
