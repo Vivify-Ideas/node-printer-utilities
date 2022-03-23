@@ -33,7 +33,8 @@ Release/obj.target/betshop_printer/src/betshop_printer.o: \
  ../node_modules/nan/nan_private.h \
  ../node_modules/nan/nan_typedarray_contents.h \
  ../node_modules/nan/nan_json.h ../node_modules/nan/nan_scriptorigin.h \
- ../src/html_to_pdf.h ../src/html_to_pdf.cpp
+ ../src/converter.h ../src/macros.h ../src/converter.cpp ../src/printer.h \
+ ../src/printer.cpp
 ../src/betshop_printer.cpp:
 ../src/betshop_printer.h:
 ../node_modules/nan/nan.h:
@@ -70,5 +71,8 @@ Release/obj.target/betshop_printer/src/betshop_printer.o: \
 ../node_modules/nan/nan_typedarray_contents.h:
 ../node_modules/nan/nan_json.h:
 ../node_modules/nan/nan_scriptorigin.h:
-../src/html_to_pdf.h:
-../src/html_to_pdf.cpp:
+../src/converter.h:
+../src/macros.h:
+../src/converter.cpp:
+../src/printer.h:
+../src/printer.cpp:

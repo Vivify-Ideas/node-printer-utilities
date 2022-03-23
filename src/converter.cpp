@@ -1,4 +1,4 @@
-#include "html_to_pdf.h"
+#include "converter.h"
 
 wkhtmltopdf_converter* converter = NULL;
 wkhtmltopdf_global_settings* global_settings;
@@ -21,15 +21,7 @@ void DeinitSettings() {
 }
 
 void ConvertHtmlToPdf(char* html, char* page_height, char* page_width) {
-
-	global_settings = wkhtmltopdf_create_global_settings();
-	wkhtmltopdf_set_global_setting(global_settings, "out", "test.pdf");
-	wkhtmltopdf_set_global_setting(global_settings, "margin.top", "0");
-	wkhtmltopdf_set_global_setting(global_settings, "margin.bottom", "0");
-	wkhtmltopdf_set_global_setting(global_settings, "margin.left", "0");
-	wkhtmltopdf_set_global_setting(global_settings, "margin.right", "0");
-	wkhtmltopdf_set_global_setting(global_settings, "size.height", page_height);
-	wkhtmltopdf_set_global_setting(global_settings, "size.width", page_width);
+  SetGlobalSettings(page_height, page_width);
 
 	object_settings = wkhtmltopdf_create_object_settings();
 
@@ -45,7 +37,22 @@ void ConvertHtmlToPdf(char* html, char* page_height, char* page_width) {
     printf("Convertion failed!");
   }
 
+  CleanupObjects();  
+}
+
+void CleanupObjects() {
   wkhtmltopdf_destroy_global_settings(global_settings);
   wkhtmltopdf_destroy_object_settings(object_settings);
   wkhtmltopdf_destroy_converter(converter);
+}
+
+void SetGlobalSettings(char* page_height, char* page_width) {
+  global_settings = wkhtmltopdf_create_global_settings();
+	wkhtmltopdf_set_global_setting(global_settings, "out", "test.pdf");
+	wkhtmltopdf_set_global_setting(global_settings, "margin.top", "0");
+	wkhtmltopdf_set_global_setting(global_settings, "margin.bottom", "0");
+	wkhtmltopdf_set_global_setting(global_settings, "margin.left", "0");
+	wkhtmltopdf_set_global_setting(global_settings, "margin.right", "0");
+	wkhtmltopdf_set_global_setting(global_settings, "size.height", page_height);
+	wkhtmltopdf_set_global_setting(global_settings, "size.width", page_width);
 }
