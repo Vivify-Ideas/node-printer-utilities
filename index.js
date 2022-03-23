@@ -4,8 +4,8 @@ function getDefaultPrinter() {
     return betshop_printer.getDefaultPrinter();
 }
 
-function sendToPrinter(html, pageHeight, pageWidth, page_size) {
-    return betshop_printer.sendToPrinter(html, pageHeight, pageWidth, page_size);
+function sendToPrinter(html, pageHeight, pageWidth, page_size, success, error) {
+  return betshop_printer.sendToPrinter(html, pageHeight, pageWidth, page_size, success, error);
 }
 
 function deinitSettings() {

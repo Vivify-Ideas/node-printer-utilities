@@ -15,6 +15,7 @@ DEFS_Debug := \
 	'-D__STDC_FORMAT_MACROS' \
 	'-DOPENSSL_NO_PINSHARED' \
 	'-DOPENSSL_THREADS' \
+	'-D_HAS_EXCEPTIONS=1' \
 	'-DBUILDING_NODE_EXTENSION' \
 	'-DDEBUG' \
 	'-D_DEBUG' \
@@ -40,7 +41,6 @@ CFLAGS_CC_Debug := \
 	-Wunused-result \
 	-Wcast-function-type \
 	-fno-rtti \
-	-fno-exceptions \
 	-std=gnu++14
 
 INCS_Debug := \
@@ -66,6 +66,7 @@ DEFS_Release := \
 	'-D__STDC_FORMAT_MACROS' \
 	'-DOPENSSL_NO_PINSHARED' \
 	'-DOPENSSL_THREADS' \
+	'-D_HAS_EXCEPTIONS=1' \
 	'-DBUILDING_NODE_EXTENSION'
 
 # Flags passed to all source files.
@@ -88,7 +89,6 @@ CFLAGS_CC_Release := \
 	-Wunused-result \
 	-Wcast-function-type \
 	-fno-rtti \
-	-fno-exceptions \
 	-std=gnu++14
 
 INCS_Release := \

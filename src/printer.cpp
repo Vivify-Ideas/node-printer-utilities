@@ -4,7 +4,7 @@ int PrintPdfDocument(char* papier_size) {
   cups_dest_t *dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
   if (dest == NULL) {
     printf("Default printer is not connected.\n");
-    return 0;
+    // throw "Default printer is not connected.\n";
   }
 
   int num_options = 0;
@@ -12,6 +12,10 @@ int PrintPdfDocument(char* papier_size) {
 
   num_options = cupsAddOption(CUPS_MEDIA, papier_size, num_options, &options);
   int job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "test.pdf", "test", num_options, options);
+
+  if (job_id == 0) {
+    // throw "Error while printing, job_id is 0";
+  }
 
   cupsFreeOptions(num_options, options);
   return job_id;

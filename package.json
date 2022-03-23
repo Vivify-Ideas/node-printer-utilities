@@ -1,7 +1,7 @@
 {
   "name": "betshop-printer",
   "version": "1.0.0",
-  "description": "Meridianbet printing solution",
+  "description": "VivifyIdeas printing solution",
   "main": "index.js",
   "scripts": {
     "compile": "node-gyp rebuild",

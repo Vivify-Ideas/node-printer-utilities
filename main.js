@@ -908,4 +908,4 @@ html {
  </body></html>`
 
  initSettings();
-console.log(sendToPrinter(html, "15cm", "10.4cm", "Custom.104x183.6mm"));
+sendToPrinter(html, "15cm", "10.4cm", "Custom.104x183.6mm", jobId => { console.log(`Success JobId: ${jobId}`)}, error => { console.log(`Error message: ${error}`) });

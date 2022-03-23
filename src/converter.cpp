@@ -1,11 +1,14 @@
 #include "converter.h"
+using v8::Null;
 
 wkhtmltopdf_converter* converter = NULL;
 wkhtmltopdf_global_settings* global_settings;
 wkhtmltopdf_object_settings* object_settings;
+v8::Local<v8::Function> globalErrorCallback;
 
 void error(wkhtmltopdf_converter * c, const char * msg) {
-	fprintf(stderr, "Error: %s\n", msg);
+  fprintf(stderr, "Error: %s\n", msg);
+  // throw msg;
 }
 
 void warning(wkhtmltopdf_converter * c, const char * msg) {
@@ -35,6 +38,7 @@ void ConvertHtmlToPdf(char* html, char* page_height, char* page_width) {
 
   if (!wkhtmltopdf_convert(converter)) {
     printf("Convertion failed!");
+    // throw "Convertion failed!";
   }
 
   CleanupObjects();  

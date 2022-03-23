@@ -6,6 +6,8 @@
       ],
       "target_name": "betshop_printer",
       "sources": [ "./src/betshop_printer.cpp" ],
+      'cflags!': [ '-fno-exceptions' ],
+      'cflags_cc!': [ '-fno-exceptions' ],
       'cflags_cc+': [
         "-Wunused-result",
         "-Wcast-function-type"
@@ -18,6 +20,9 @@
           'sources/': [['exclude', '_posix\\.cc$']]
         }],
         ['OS!="win"', {
+          "defines": [
+            "_HAS_EXCEPTIONS=1"
+          ],
           'cflags':[
             '<!(cups-config --cflags)'
           ],
