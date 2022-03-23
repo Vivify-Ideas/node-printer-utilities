@@ -1,24 +1,19 @@
 #include "printer.h"
 
-int PrintPdfDocument(char* papier_size) {
+void PrintPdfDocument(char* papier_size, int* job_id) {
   cups_dest_t *dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
   if (dest == NULL) {
     printf("Default printer is not connected.\n");
-    // throw "Default printer is not connected.\n";
+    return Nan::ThrowTypeError("Default printer is not connected.\n");
   }
 
   int num_options = 0;
   cups_option_t *options = NULL;
 
   num_options = cupsAddOption(CUPS_MEDIA, papier_size, num_options, &options);
-  int job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "test.pdf", "test", num_options, options);
-
-  if (job_id == 0) {
-    // throw "Error while printing, job_id is 0";
-  }
+  *job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "file.pdf", "test", num_options, options);
 
   cupsFreeOptions(num_options, options);
-  return job_id;
 }
 
 v8::Local<v8::Object> GetDefaultPrinterObject() {

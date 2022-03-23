@@ -4,11 +4,10 @@ using v8::Null;
 wkhtmltopdf_converter* converter = NULL;
 wkhtmltopdf_global_settings* global_settings;
 wkhtmltopdf_object_settings* object_settings;
-v8::Local<v8::Function> globalErrorCallback;
 
 void error(wkhtmltopdf_converter * c, const char * msg) {
   fprintf(stderr, "Error: %s\n", msg);
-  // throw msg;
+  return Nan::ThrowTypeError(msg);
 }
 
 void warning(wkhtmltopdf_converter * c, const char * msg) {
@@ -16,7 +15,7 @@ void warning(wkhtmltopdf_converter * c, const char * msg) {
 }
 
 void InitSettings() {
-	wkhtmltopdf_init(true);
+	wkhtmltopdf_init(false);
 }
 
 void DeinitSettings() {
@@ -38,7 +37,7 @@ void ConvertHtmlToPdf(char* html, char* page_height, char* page_width) {
 
   if (!wkhtmltopdf_convert(converter)) {
     printf("Convertion failed!");
-    // throw "Convertion failed!";
+    return Nan::ThrowTypeError("Convertion failed!");
   }
 
   CleanupObjects();  
@@ -52,7 +51,7 @@ void CleanupObjects() {
 
 void SetGlobalSettings(char* page_height, char* page_width) {
   global_settings = wkhtmltopdf_create_global_settings();
-	wkhtmltopdf_set_global_setting(global_settings, "out", "test.pdf");
+	wkhtmltopdf_set_global_setting(global_settings, "out", "file.pdf");
 	wkhtmltopdf_set_global_setting(global_settings, "margin.top", "0");
 	wkhtmltopdf_set_global_setting(global_settings, "margin.bottom", "0");
 	wkhtmltopdf_set_global_setting(global_settings, "margin.left", "0");
