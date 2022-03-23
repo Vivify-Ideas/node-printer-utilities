@@ -7,19 +7,12 @@ DEFS_Debug := \
 	'-DUSING_UV_SHARED=1' \
 	'-DUSING_V8_SHARED=1' \
 	'-DV8_DEPRECATION_WARNINGS=1' \
-	'-DV8_DEPRECATION_WARNINGS' \
-	'-DV8_IMMINENT_DEPRECATION_WARNINGS' \
-	'-D_GLIBCXX_USE_CXX11_ABI=1' \
 	'-D_LARGEFILE_SOURCE' \
 	'-D_FILE_OFFSET_BITS=64' \
-	'-D__STDC_FORMAT_MACROS' \
-	'-DOPENSSL_NO_PINSHARED' \
-	'-DOPENSSL_THREADS' \
 	'-D_HAS_EXCEPTIONS=1' \
 	'-DBUILDING_NODE_EXTENSION' \
 	'-DDEBUG' \
-	'-D_DEBUG' \
-	'-DV8_ENABLE_CHECKS'
+	'-D_DEBUG'
 
 # Flags passed to all source files.
 CFLAGS_Debug := \
@@ -41,16 +34,16 @@ CFLAGS_CC_Debug := \
 	-Wunused-result \
 	-Wcast-function-type \
 	-fno-rtti \
-	-std=gnu++14
+	-std=gnu++0x
 
 INCS_Debug := \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/include/node \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/src \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/openssl/config \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/openssl/openssl/include \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/uv/include \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/zlib \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/v8/include \
+	-I/tmp/prebuildify/node/5.0.0/include/node \
+	-I/tmp/prebuildify/node/5.0.0/src \
+	-I/tmp/prebuildify/node/5.0.0/deps/openssl/config \
+	-I/tmp/prebuildify/node/5.0.0/deps/openssl/openssl/include \
+	-I/tmp/prebuildify/node/5.0.0/deps/uv/include \
+	-I/tmp/prebuildify/node/5.0.0/deps/zlib \
+	-I/tmp/prebuildify/node/5.0.0/deps/v8/include \
 	-I$(srcdir)/node_modules/nan
 
 DEFS_Release := \
@@ -58,14 +51,8 @@ DEFS_Release := \
 	'-DUSING_UV_SHARED=1' \
 	'-DUSING_V8_SHARED=1' \
 	'-DV8_DEPRECATION_WARNINGS=1' \
-	'-DV8_DEPRECATION_WARNINGS' \
-	'-DV8_IMMINENT_DEPRECATION_WARNINGS' \
-	'-D_GLIBCXX_USE_CXX11_ABI=1' \
 	'-D_LARGEFILE_SOURCE' \
 	'-D_FILE_OFFSET_BITS=64' \
-	'-D__STDC_FORMAT_MACROS' \
-	'-DOPENSSL_NO_PINSHARED' \
-	'-DOPENSSL_THREADS' \
 	'-D_HAS_EXCEPTIONS=1' \
 	'-DBUILDING_NODE_EXTENSION'
 
@@ -79,6 +66,8 @@ CFLAGS_Release := \
 	-m64 \
 	 \
 	-O3 \
+	-ffunction-sections \
+	-fdata-sections \
 	-fno-omit-frame-pointer
 
 # Flags passed to only C files.
@@ -89,16 +78,16 @@ CFLAGS_CC_Release := \
 	-Wunused-result \
 	-Wcast-function-type \
 	-fno-rtti \
-	-std=gnu++14
+	-std=gnu++0x
 
 INCS_Release := \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/include/node \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/src \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/openssl/config \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/openssl/openssl/include \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/uv/include \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/zlib \
-	-I/home/dhvp/.cache/node-gyp/16.13.1/deps/v8/include \
+	-I/tmp/prebuildify/node/5.0.0/include/node \
+	-I/tmp/prebuildify/node/5.0.0/src \
+	-I/tmp/prebuildify/node/5.0.0/deps/openssl/config \
+	-I/tmp/prebuildify/node/5.0.0/deps/openssl/openssl/include \
+	-I/tmp/prebuildify/node/5.0.0/deps/uv/include \
+	-I/tmp/prebuildify/node/5.0.0/deps/zlib \
+	-I/tmp/prebuildify/node/5.0.0/deps/v8/include \
 	-I$(srcdir)/node_modules/nan
 
 OBJS := \

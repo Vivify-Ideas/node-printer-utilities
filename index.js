@@ -1,4 +1,4 @@
-const betshop_printer = require('./build/Release/betshop_printer');
+const betshop_printer = require('node-gyp-build')(__dirname);
 
 function getDefaultPrinter() {
     return betshop_printer.getDefaultPrinter();

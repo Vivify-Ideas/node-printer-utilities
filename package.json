@@ -1,19 +1,26 @@
 {
-  "name": "betshop-printer",
-  "version": "1.0.0",
+  "name": "node-printer-utility",
+  "version": "0.0.1",
   "description": "VivifyIdeas printing solution",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vivify-Ideas/node-printer-utilities.git"
+  },
+  "contributors": [
+    "Vladimir Plavsic @DHVPP",
+    "Nikola Pacariz @nikolapacariz"
+  ],
   "scripts": {
     "compile": "node-gyp rebuild",
     "start": "node main.js"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "nan": "^2.15.0",
     "node-gyp": "^8.4.1",
-    "prebuild": "^11.0.3"
+    "node-gyp-build": "^4.3.0"
   },
   "gypfile": true
 }

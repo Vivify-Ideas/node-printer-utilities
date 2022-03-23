@@ -308,8 +308,8 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
 endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
-cmd_regen_makefile = cd $(srcdir); /home/dhvp/Projekti/meridianbet/betshop-printer/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/home/dhvp/.cache/node-gyp/16.13.1" "-Dnode_gyp_dir=/home/dhvp/Projekti/meridianbet/betshop-printer/node_modules/node-gyp" "-Dnode_lib_file=/home/dhvp/.cache/node-gyp/16.13.1/<(target_arch)/node.lib" "-Dmodule_root_dir=/home/dhvp/Projekti/meridianbet/betshop-printer" "-Dnode_engine=v8" "--depth=." "-Goutput_dir=." "--generator-output=build" -I/home/dhvp/Projekti/meridianbet/betshop-printer/build/config.gypi -I/home/dhvp/Projekti/meridianbet/betshop-printer/node_modules/node-gyp/addon.gypi -I/home/dhvp/.cache/node-gyp/16.13.1/include/node/common.gypi "--toplevel-dir=." binding.gyp
-Makefile: $(srcdir)/binding.gyp $(srcdir)/build/config.gypi $(srcdir)/node_modules/node-gyp/addon.gypi $(srcdir)/../../../.cache/node-gyp/16.13.1/include/node/common.gypi
+cmd_regen_makefile = cd $(srcdir); /home/dhvp/Projekti/meridianbet/betshop-printer/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/tmp/prebuildify/node/5.0.0" "-Dnode_gyp_dir=/home/dhvp/Projekti/meridianbet/betshop-printer/node_modules/node-gyp" "-Dnode_lib_file=/tmp/prebuildify/node/5.0.0/<(target_arch)/node.lib" "-Dmodule_root_dir=/home/dhvp/Projekti/meridianbet/betshop-printer" "-Dnode_engine=v8" "--depth=." "-Goutput_dir=." "--generator-output=build" -I/home/dhvp/Projekti/meridianbet/betshop-printer/build/config.gypi -I/home/dhvp/Projekti/meridianbet/betshop-printer/node_modules/node-gyp/addon.gypi -I/tmp/prebuildify/node/5.0.0/include/node/common.gypi "--toplevel-dir=." binding.gyp
+Makefile: $(srcdir)/../../../../../tmp/prebuildify/node/5.0.0/include/node/common.gypi $(srcdir)/build/config.gypi $(srcdir)/node_modules/node-gyp/addon.gypi $(srcdir)/binding.gyp
 	$(call do_cmd,regen_makefile)
 
 # "all" is a concatenation of the "all" targets from all the included
