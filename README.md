@@ -1,10 +1,16 @@
 # Node Printer utility for Electron/NodeJS Applications
 
+## Development of this package
+
+To be able to recompile this package, you will have to install ```wkhtmltox``` native package that can be found on this [link.](https://wkhtmltopdf.org/downloads.html)
+
 ## Installation
 
 ```bash
 npm install --save node-printer-utility
 ```
+
+If your Electron and NodeJS NODE_MODULE version differs, you will have to rebuild this package with your Electron version using electron-rebuild after installing .
 
 ## Usage
 This package offers printing of a HTML string through conversion to PDF using native ```wkhtmltox``` package, and then printing using native ```CUPS``` package.
