@@ -17,7 +17,7 @@ This package offers printing of a HTML string through conversion to PDF using na
 If you wish to use printing capabilities of this package, you first have to call ```initSettings()``` method at the app startup, so the wkhtmltox initiates its configuration, and also be sure to to call ```deinitSettings()``` the application exit.
 
 ```js
-const printer = require('node-printer-utility');
+const { getDefaultPrinter } = require('node-printer-utility');
 
 console.log(getDefaultPrinter());
 ```
