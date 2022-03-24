@@ -1,7 +1,5 @@
 #include "betshop_printer.h"
-#include <chrono>
 
-using v8::Null;
 using namespace std;
 
 FUNCTION_TO_EXPORT(GetDefaultPrinter) {
@@ -13,32 +11,26 @@ FUNCTION_TO_EXPORT(GetDefaultPrinter) {
 FUNCTION_TO_EXPORT(SendToPrinter) {
   Nan::HandleScope scope;
 
+  int job_id = 0;
+
   VALIDATE_AND_RETURN_STRING(args, 0, html);
   VALIDATE_AND_RETURN_STRING(args, 1, page_height);
   VALIDATE_AND_RETURN_STRING(args, 2, page_width);
   VALIDATE_AND_RETURN_STRING(args, 3, paper_size);
-  VALIDATE_AND_RETURN_FUNCTION(args, 4, successCallback);
-  VALIDATE_AND_RETURN_FUNCTION(args, 5, errorCallback);
-
-  int job_id = 0;
-  double sum = 0;
-  auto begin = std::chrono::high_resolution_clock::now();
+  VALIDATE_AND_RETURN_FUNCTION(args, 4, success_callback);
+  VALIDATE_AND_RETURN_FUNCTION(args, 5, error_callback);
 
   ConvertHtmlToPdf(*html, *page_height, *page_width);
   PrintPdfDocument(*paper_size, &job_id);
 
   if (job_id == 0) {
-    v8::Local<v8::Value> responseError(Nan::New<v8::String>("Error while printing.").ToLocalChecked());
-    errorCallback->Call(Nan::GetCurrentContext(), Null(args.GetIsolate()), 1, &responseError);
+    v8::Local<v8::Value> error_response(Nan::New<v8::String>("Error while printing.").ToLocalChecked());
+    error_callback->Call(Nan::GetCurrentContext(), Null(args.GetIsolate()), 1, &error_response);
     return;
   }
-
-  auto end = std::chrono::high_resolution_clock::now();
-  auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-  printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
   
-  v8::Local<v8::Value> responseSuccess(Nan::New<v8::Number>(job_id));
-  successCallback->Call(Nan::GetCurrentContext(), Null(args.GetIsolate()), 1, &responseSuccess);
+  v8::Local<v8::Value> success_response(Nan::New<v8::Number>(job_id));
+  success_callback->Call(Nan::GetCurrentContext(), Null(args.GetIsolate()), 1, &success_response);
   FUNCTION_SET_RETURN_VALUE(job_id);
 }
 

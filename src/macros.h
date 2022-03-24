@@ -1,3 +1,5 @@
+using v8::Null;
+
 #define VALIDATE_AND_RETURN_STRING(args, argi, variable) \
   if (args.Length() <= argi || !args[argi]->IsString()) { \
     return Nan::ThrowTypeError("Argument  " #argi " has to be string!"); \
