@@ -1,5 +1,9 @@
 # Node Printer utility for Electron/NodeJS Applications
 
+## Note
+
+The package is still in Alpha testing. If you encounter any problems or dificulties running it, feel free to open an issue.
+
 ## Development of this package
 
 To be able to recompile this package, you will have to install ```wkhtmltox``` native package that can be found on this [link.](https://wkhtmltopdf.org/downloads.html)
