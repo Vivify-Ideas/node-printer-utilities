@@ -11,27 +11,34 @@ void PrintPdfDocument(char* papier_size, int* job_id) {
   cups_option_t *options = NULL;
 
   num_options = cupsAddOption(CUPS_MEDIA, papier_size, num_options, &options);
-  *job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "file.pdf", "test", num_options, options);
+  *job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "file.pdf", "File", num_options, options);
 
   cupsFreeOptions(num_options, options);
 }
 
-std::string GetJobStatus(int job_id) {
+v8::Local<v8::String> GetJobStatus(int job_id) {
   cups_job_t* jobs = NULL;
   cups_dest_t* dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
-  
+  int jobs_count = cupsGetJobs2(CUPS_HTTP_DEFAULT, &jobs, dest->name, 0, CUPS_WHICHJOBS_ALL);
+
+  std::string job_state = FindJobState(jobs_count, jobs, job_id);
+  v8::Local<v8::String> job_state_response(Nan::New<v8::String>(job_state).ToLocalChecked());
+  cupsFreeJobs(jobs_count, jobs);
+  return job_state_response;
+}
+
+std::string FindJobState(int jobs_count, cups_job_t* jobs, int job_id) {
   std::string job_state = "";
-  int jobs_count = cupsGetJobs(&jobs, dest->name, 1, -1);
-  printf("%d", jobs_count);
-  for(int i = 0; i < jobs_count; i++, jobs++) {
-    if (jobs[i].id != job_id) {
+  cups_job_t* job_accessor = jobs;
+  for(int i = 0; i < jobs_count; ++i, ++job_accessor) {
+    if (job_accessor[i].id != job_id) {
       continue;
     }
 
-    job_state = FormatJobStatus(jobs[i].state);
+    job_state = FormatJobStatus(job_accessor[i].state);
+    break;
   }
-  // TODO Fix segmentation error after clearing jobs ASAP
-  // cupsFreeJobs(jobs_count, jobs);
+
   return job_state;
 }
 

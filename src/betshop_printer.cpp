@@ -2,61 +2,56 @@
 
 using namespace std;
 
-FUNCTION_TO_EXPORT(GetDefaultPrinter) {
+NAN_METHOD(getDefaultPrinter) {
   Nan::HandleScope scope;
   v8::Local<v8::Object> default_printer_result = GetDefaultPrinterObject();
-  FUNCTION_SET_RETURN_VALUE(default_printer_result);
+  info.GetReturnValue().Set(default_printer_result);
 }
 
-FUNCTION_TO_EXPORT(GetJobStatus) {
-  Nan::HandleScope scope;
-  VALIDATE_AND_RETURN_INTEGER(args, 0, job_id);
-  std::string job_status = GetJobStatus(job_id);
-  v8::Local<v8::Value> job_status_response(Nan::New<v8::String>(job_status).ToLocalChecked());
-  FUNCTION_SET_RETURN_VALUE(job_status_response);
+NAN_METHOD(getJobStatus) {
+  VALIDATE_AND_RETURN_INTEGER(info, 0, job_id);
+  v8::Local<v8::String> job_status = GetJobStatus(job_id);
+  info.GetReturnValue().Set(job_status);
 }
 
-FUNCTION_TO_EXPORT(SendToPrinter) {
-  Nan::HandleScope scope;
-
+NAN_METHOD(sendToPrinter) {
   int job_id = 0;
 
-  VALIDATE_AND_RETURN_STRING(args, 0, html);
-  VALIDATE_AND_RETURN_STRING(args, 1, page_height);
-  VALIDATE_AND_RETURN_STRING(args, 2, page_width);
-  VALIDATE_AND_RETURN_STRING(args, 3, paper_size);
-  VALIDATE_AND_RETURN_FUNCTION(args, 4, success_callback);
-  VALIDATE_AND_RETURN_FUNCTION(args, 5, error_callback);
+  VALIDATE_AND_RETURN_STRING(info, 0, html);
+  VALIDATE_AND_RETURN_STRING(info, 1, page_height);
+  VALIDATE_AND_RETURN_STRING(info, 2, page_width);
+  VALIDATE_AND_RETURN_STRING(info, 3, paper_size);
+  VALIDATE_AND_RETURN_FUNCTION(info, 4, success_callback);
+  VALIDATE_AND_RETURN_FUNCTION(info, 5, error_callback);
 
   ConvertHtmlToPdf(*html, *page_height, *page_width);
   PrintPdfDocument(*paper_size, &job_id);
 
   if (job_id == 0) {
     v8::Local<v8::Value> error_response(Nan::New<v8::String>("Error while printing.").ToLocalChecked());
-    error_callback->Call(Nan::GetCurrentContext(), Null(args.GetIsolate()), 1, &error_response);
+    v8::MaybeLocal<v8::Value> error = error_callback->Call(Nan::GetCurrentContext(), Null(info.GetIsolate()), 1, &error_response);
     return;
   }
   
   v8::Local<v8::Value> success_response(Nan::New<v8::Number>(job_id));
-  success_callback->Call(Nan::GetCurrentContext(), Null(args.GetIsolate()), 1, &success_response);
-  FUNCTION_SET_RETURN_VALUE(job_id);
+  v8::MaybeLocal<v8::Value> success = success_callback->Call(Nan::GetCurrentContext(), Null(info.GetIsolate()), 1, &success_response);
+  info.GetReturnValue().Set(success);
 }
 
-FUNCTION_TO_EXPORT(InitSettings) {
+NAN_METHOD(initSettings) {
   InitSettings();
 }
 
-FUNCTION_TO_EXPORT(DeinitSettings) {
+NAN_METHOD(deinitSettings) {
   DeinitSettings();
 }
 
-void Init(v8::Local<v8::Object> exports) {
-  v8::Local<v8::Context> context = Nan::GetCurrentContext();
-  FUNCTION_EXPORT(context, GetDefaultPrinter, "getDefaultPrinter");
-  FUNCTION_EXPORT(context, SendToPrinter, "sendToPrinter");
-  FUNCTION_EXPORT(context, InitSettings, "initSettings");
-  FUNCTION_EXPORT(context, DeinitSettings, "deinitSettings");
-  FUNCTION_EXPORT(context, GetJobStatus, "getJobStatus");
+NAN_MODULE_INIT(Init) {
+  NAN_EXPORT(target, getDefaultPrinter);
+  NAN_EXPORT(target, sendToPrinter);
+  NAN_EXPORT(target, initSettings);
+  NAN_EXPORT(target, deinitSettings);
+  NAN_EXPORT(target, getJobStatus);
 }
 
 NODE_MODULE(betshop_printer, Init)

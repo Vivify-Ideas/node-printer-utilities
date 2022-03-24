@@ -1,5 +1,7 @@
 const printer = require('node-gyp-build')(__dirname);
 
+let isSettingsSet = false;
+
 function getDefaultPrinter() {
   return printer.getDefaultPrinter();
 }
@@ -8,12 +10,21 @@ function sendToPrinter(html, pageHeight, pageWidth, page_size, success, error) {
   return printer.sendToPrinter(html, pageHeight, pageWidth, page_size, success, error);
 }
 
-function deinitSettings() {
-  return printer.deinitSettings();
+function initSettings() {
+  if (isSettingsSet) {
+    return;
+  }
+
+  isSettingsSet = true;
+  return printer.initSettings();
 }
 
-function initSettings() {
-  return printer.initSettings();
+function deinitSettings() {
+  if (!isSettingsSet) {
+    return;
+  }
+
+  return printer.deinitSettings();
 }
 
 function getJobStatus(job_id) {
