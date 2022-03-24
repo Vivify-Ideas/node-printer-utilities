@@ -8,6 +8,14 @@ FUNCTION_TO_EXPORT(GetDefaultPrinter) {
   FUNCTION_SET_RETURN_VALUE(default_printer_result);
 }
 
+FUNCTION_TO_EXPORT(GetJobStatus) {
+  Nan::HandleScope scope;
+  VALIDATE_AND_RETURN_INTEGER(args, 0, job_id);
+  std::string job_status = GetJobStatus(job_id);
+  v8::Local<v8::Value> job_status_response(Nan::New<v8::String>(job_status).ToLocalChecked());
+  FUNCTION_SET_RETURN_VALUE(job_status_response);
+}
+
 FUNCTION_TO_EXPORT(SendToPrinter) {
   Nan::HandleScope scope;
 
@@ -48,6 +56,7 @@ void Init(v8::Local<v8::Object> exports) {
   FUNCTION_EXPORT(context, SendToPrinter, "sendToPrinter");
   FUNCTION_EXPORT(context, InitSettings, "initSettings");
   FUNCTION_EXPORT(context, DeinitSettings, "deinitSettings");
+  FUNCTION_EXPORT(context, GetJobStatus, "getJobStatus");
 }
 
 NODE_MODULE(betshop_printer, Init)

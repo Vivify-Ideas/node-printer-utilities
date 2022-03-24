@@ -13,7 +13,6 @@
       'cflags_cc!': [ '-fno-exceptions' ],
       'cflags_cc+': [
         "-Wunused-result",
-        "-Wcast-function-type"
       ],
       'conditions': [
         ['OS!="linux"', {'sources/': [['exclude', '_linux\\.cc$']]}],

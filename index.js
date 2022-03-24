@@ -1,22 +1,27 @@
-const betshop_printer = require('node-gyp-build')(__dirname);
+const printer = require('node-gyp-build')(__dirname);
 
 function getDefaultPrinter() {
-    return betshop_printer.getDefaultPrinter();
+  return printer.getDefaultPrinter();
 }
 
 function sendToPrinter(html, pageHeight, pageWidth, page_size, success, error) {
-  return betshop_printer.sendToPrinter(html, pageHeight, pageWidth, page_size, success, error);
+  return printer.sendToPrinter(html, pageHeight, pageWidth, page_size, success, error);
 }
 
 function deinitSettings() {
-    return betshop_printer.deinitSettings();
+  return printer.deinitSettings();
 }
 
 function initSettings() {
-    return betshop_printer.initSettings();
+  return printer.initSettings();
+}
+
+function getJobStatus(job_id) {
+  return printer.getJobStatus(job_id);
 }
 
 module.exports.getDefaultPrinter = getDefaultPrinter;
 module.exports.sendToPrinter = sendToPrinter;
-module.exports.deinitSettings = deinitSettings;
 module.exports.initSettings = initSettings;
+module.exports.deinitSettings = deinitSettings;
+module.exports.getJobStatus = getJobStatus;

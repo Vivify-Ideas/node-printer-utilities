@@ -16,11 +16,51 @@ void PrintPdfDocument(char* papier_size, int* job_id) {
   cupsFreeOptions(num_options, options);
 }
 
+std::string GetJobStatus(int job_id) {
+  cups_job_t* jobs = NULL;
+  cups_dest_t* dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
+  
+  std::string job_state = "";
+  int jobs_count = cupsGetJobs(&jobs, dest->name, 1, -1);
+  printf("%d", jobs_count);
+  for(int i = 0; i < jobs_count; i++, jobs++) {
+    if (jobs[i].id != job_id) {
+      continue;
+    }
+
+    job_state = FormatJobStatus(jobs[i].state);
+  }
+  // TODO Fix segmentation error after clearing jobs ASAP
+  // cupsFreeJobs(jobs_count, jobs);
+  return job_state;
+}
+
+std::string FormatJobStatus(ipp_jstate_t job_state) {
+  switch (job_state) {
+    case IPP_JOB_PENDING:
+      return "IPP_JOB_PENDING";
+    case IPP_JOB_HELD:
+      return "IPP_JOB_HELD";
+    case IPP_JOB_PROCESSING:
+      return "IPP_JOB_PROCESSING";
+    case IPP_JOB_STOPPED:
+      return "IPP_JOB_STOPPED";
+    case IPP_JOB_CANCELED:
+      return "IPP_JOB_CANCELED";
+    case IPP_JOB_COMPLETED:
+      return "IPP_JOB_COMPLETED";
+    case IPP_JOB_ABORTED:
+      return "IPP_JOB_ABORTED";
+    default:
+      return "IPP_JOB_UNIDENTIFIED";
+  }
+}
+
 v8::Local<v8::Object> GetDefaultPrinterObject() {
   cups_dest_t *printer = NULL;
   int printers_size = cupsGetDests(&printer);
 
-  v8::Local<v8::Object> default_printer_result = V8_NEW_OBJECT();
+  v8::Local<v8::Object> default_printer_result = Nan::New<v8::Object>();
   for(int i = 0; i < printers_size; ++i, ++printer) {
     if (printer->is_default != DEFAULT_PRINTER) {
       continue;
@@ -38,9 +78,9 @@ v8::Local<v8::Object> GetDefaultPrinterObject() {
 }
 
 v8::Local<v8::Object> FormatPrinterOptions(cups_option_t *options, int option_size) {
-  v8::Local<v8::Object> result_printer_options = V8_NEW_OBJECT();
+  v8::Local<v8::Object> result_printer_options = Nan::New<v8::Object>();
   for(int j = 0; j < option_size; ++j, ++options) {
-    Nan::Set(result_printer_options, V8_STRING_NEW_UTF8(options->name), V8_STRING_NEW_UTF8(options->value));
+    Nan::Set(result_printer_options, Nan::New<v8::String>(options->name).ToLocalChecked(), Nan::New<v8::String>(options->value).ToLocalChecked());
   }
 
   return result_printer_options;
