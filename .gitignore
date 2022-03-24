@@ -1,4 +1,8 @@
-**/node_modules
+.vscode/*
+
 prebuilds
+
 main.js
+
 package-lock.json
+node_modules
