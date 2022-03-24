@@ -1,1 +1,4 @@
 **/node_modules
+prebuilds
+main.js
+package-lock.json
