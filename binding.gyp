@@ -37,7 +37,12 @@
           'link_settings': {
             'libraries': [
               '<!(cups-config --libs)',
-              '-ludev',
+            ]
+          }
+        }],
+        ['OS=="linux"', {
+          'link_settings': {
+            'libraries': [
               '/usr/local/lib/libwkhtmltox.so.0'
             ]
           }
