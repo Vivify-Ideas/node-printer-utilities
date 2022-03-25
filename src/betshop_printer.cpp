@@ -35,7 +35,7 @@ NAN_METHOD(sendToPrinter) {
   
   v8::Local<v8::Value> success_response(Nan::New<v8::Number>(job_id));
   v8::MaybeLocal<v8::Value> success = success_callback->Call(Nan::GetCurrentContext(), Null(info.GetIsolate()), 1, &success_response);
-  info.GetReturnValue().Set(success);
+  info.GetReturnValue().Set(job_id);
 }
 
 NAN_METHOD(initSettings) {
