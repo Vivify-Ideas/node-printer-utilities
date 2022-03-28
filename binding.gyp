@@ -15,12 +15,6 @@
         "-Wunused-result",
       ],
       'conditions': [
-        ['OS!="linux"', {'sources/': [['exclude', '_linux\\.cc$']]}],
-        ['OS!="mac"', {'sources/': [['exclude', '_mac\\.cc|mm?$']]}],
-        ['OS!="win"', {
-          'sources/': [['exclude', '_win\\.cc$']]}, {
-          'sources/': [['exclude', '_posix\\.cc$']]
-        }],
         ['OS!="win"', {
           "defines": [
             "_HAS_EXCEPTIONS=1"
@@ -44,7 +38,7 @@
           'link_settings': {
             'libraries': [
               '/usr/local/lib/libwkhtmltox.so.0'
-            ]
+            ],
           }
         }]
       ]
