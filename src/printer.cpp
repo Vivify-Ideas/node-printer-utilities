@@ -29,13 +29,12 @@ v8::Local<v8::String> GetJobStatus(int job_id) {
 
 std::string FindJobState(int jobs_count, cups_job_t* jobs, int job_id) {
   std::string job_state = "";
-  cups_job_t* job_accessor = jobs;
-  for(int i = 0; i < jobs_count; ++i, ++job_accessor) {
-    if (job_accessor[i].id != job_id) {
+  for(int i = 0; i < jobs_count; ++i, ++jobs) {
+    if (jobs[i].id != job_id) {
       continue;
     }
 
-    job_state = FormatJobStatus(job_accessor[i].state);
+    job_state = FormatJobStatus(jobs[i].state);
     break;
   }
 

@@ -23,7 +23,8 @@ function deinitSettings() {
   if (!isSettingsSet) {
     return;
   }
-
+  
+  isSettingsSet = false;
   return printer.deinitSettings();
 }
 
