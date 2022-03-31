@@ -1,6 +1,6 @@
 {
   "name": "node-printer-utility",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "VivifyIdeas printing solution",
   "main": "index.js",
   "repository": {
