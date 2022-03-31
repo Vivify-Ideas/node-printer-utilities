@@ -14,6 +14,7 @@ void PrintPdfDocument(char* papier_size, int* job_id) {
   *job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "file.pdf", "File", num_options, options);
 
   cupsFreeOptions(num_options, options);
+  remove("file.pdf");
 }
 
 v8::Local<v8::String> GetJobStatus(int job_id) {
