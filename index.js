@@ -32,8 +32,13 @@ function getJobStatus(job_id) {
   return printer.getJobStatus(job_id);
 }
 
+function checkIsJobCompleted(job_id) {
+  return printer.checkIsJobCompleted(job_id);
+}
+
 module.exports.getDefaultPrinter = getDefaultPrinter;
 module.exports.sendToPrinter = sendToPrinter;
 module.exports.initSettings = initSettings;
 module.exports.deinitSettings = deinitSettings;
 module.exports.getJobStatus = getJobStatus;
+module.exports.checkIsJobCompleted = checkIsJobCompleted;

@@ -17,14 +17,19 @@ void PrintPdfDocument(char* papier_size, int* job_id) {
   remove("file.pdf");
 }
 
-v8::Local<v8::String> GetJobStatus(int job_id) {
+v8::Local<v8::String> GetJobStatus(int job_id, int cups_which_jobs = CUPS_WHICHJOBS_ALL) {
   cups_job_t* jobs = NULL;
   cups_dest_t* dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
-  int jobs_count = cupsGetJobs2(CUPS_HTTP_DEFAULT, &jobs, dest->name, 0, CUPS_WHICHJOBS_ALL);
+  int jobs_count = cupsGetJobs2(CUPS_HTTP_DEFAULT, &jobs, dest->name, 0, cups_which_jobs);
 
   std::string job_state = FindJobState(jobs_count, jobs, job_id);
   v8::Local<v8::String> job_state_response(Nan::New<v8::String>(job_state).ToLocalChecked());
   cupsFreeJobs(jobs_count, jobs);
+  return job_state_response;
+}
+
+v8::Local<v8::String> CheckIsJobCompleted(int job_id) {
+  v8::Local<v8::String> job_state_response(GetJobStatus(job_id, CUPS_WHICHJOBS_COMPLETED));
   return job_state_response;
 }
 

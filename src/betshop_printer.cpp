@@ -14,6 +14,12 @@ NAN_METHOD(getJobStatus) {
   info.GetReturnValue().Set(job_status);
 }
 
+NAN_METHOD(checkIsJobCompleted) {
+  VALIDATE_AND_RETURN_INTEGER(info, 0, job_id);
+  v8::Local<v8::String> job_status = CheckIsJobCompleted(job_id);
+  info.GetReturnValue().Set(job_status);
+}
+
 NAN_METHOD(sendToPrinter) {
   int job_id = 0;
 
@@ -52,6 +58,7 @@ NAN_MODULE_INIT(Init) {
   NAN_EXPORT(target, initSettings);
   NAN_EXPORT(target, deinitSettings);
   NAN_EXPORT(target, getJobStatus);
+  NAN_EXPORT(target, checkIsJobCompleted);
 }
 
 NODE_MODULE(betshop_printer, Init)

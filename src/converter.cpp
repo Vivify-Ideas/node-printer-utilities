@@ -29,6 +29,7 @@ void ConvertHtmlToPdf(char* html, char* page_height, char* page_width) {
 
   wkhtmltopdf_set_object_setting(object_settings, "page", html);
   wkhtmltopdf_set_object_setting(object_settings, "load.blockLocalFileAccess", "false");
+  wkhtmltopdf_set_object_setting(object_settings, "web.enableIntelligentShrinking", "false");
 
   converter = wkhtmltopdf_create_converter(global_settings);
   wkhtmltopdf_add_object(converter, object_settings, NULL);
