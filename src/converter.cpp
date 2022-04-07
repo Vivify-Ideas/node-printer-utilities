@@ -15,7 +15,7 @@ void warning(wkhtmltopdf_converter * c, const char * msg) {
 }
 
 void InitSettings() {
-  wkhtmltopdf_init(false);
+  wkhtmltopdf_init(true);
 }
 
 void DeinitSettings() {
