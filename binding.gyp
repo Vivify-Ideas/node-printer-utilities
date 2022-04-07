@@ -40,6 +40,13 @@
               '/usr/local/lib/libwkhtmltox.so.0'
             ],
           }
+        }],
+        ['OS=="mac"', {
+          'link_settings': {
+            'libraries': [
+              '/usr/local/lib/libwkhtmltox.dylib'
+            ]
+          }
         }]
       ]
     }
