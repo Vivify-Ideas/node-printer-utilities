@@ -33,14 +33,14 @@ v8::Local<v8::String> CheckIsJobCompleted(int job_id) {
   return job_state_response;
 }
 
-std::string FindJobState(int jobs_count, cups_job_t* jobs, int job_id) {
+std::string FindJobState(int jobs_count, cups_job_t* job, int job_id) {
   std::string job_state = "";
-  for(int i = 0; i < jobs_count; ++i, ++jobs) {
-    if (jobs[i].id != job_id) {
+  for(int i = 0; i < jobs_count; ++i, ++job) {
+    if (job->id != job_id) {
       continue;
     }
 
-    job_state = FormatJobStatus(jobs[i].state);
+    job_state = FormatJobStatus(job->state);
     break;
   }
 
