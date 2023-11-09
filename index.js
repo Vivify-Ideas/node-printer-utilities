@@ -6,8 +6,8 @@ function getDefaultPrinter() {
   return printer.getDefaultPrinter();
 }
 
-function sendToPrinter(html, pageHeight, pageWidth, page_size, success, error) {
-  return printer.sendToPrinter(html, pageHeight, pageWidth, page_size, success, error);
+function sendToPrinter(html, pageInfo, fileInfo, success, error) {
+  return printer.sendToPrinter(html, pageInfo, fileInfo, success, error);
 }
 
 function initSettings() {

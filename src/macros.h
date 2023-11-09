@@ -24,3 +24,6 @@ using v8::Null;
   } \
   v8::Local<v8::Function> variable = args[argi].As<v8::Function>();
 
+#define TO_CHAR_FROM_LOCAL(obj, property, variable, propertyLocal) \
+  v8::Local<v8::Value> propertyLocal = Nan::Get(obj, Nan::New<v8::String>(property).ToLocalChecked()).ToLocalChecked(); \
+  Nan::Utf8String variable(propertyLocal->ToString(Nan::GetCurrentContext()).FromMaybe(v8::Local<v8::Value>())); \

@@ -18,7 +18,7 @@
   "keywords": [],
   "license": "ISC",
   "dependencies": {
-    "nan": "^2.15.0",
+    "nan": "^2.18.0",
     "node-gyp": "^8.4.1",
     "node-gyp-build": "^4.3.0"
   },

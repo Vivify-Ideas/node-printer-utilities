@@ -1,4 +1,6 @@
 #include "converter.h"
+#include <string.h>
+
 using v8::Null;
 
 wkhtmltopdf_converter* converter = NULL;
@@ -22,8 +24,8 @@ void DeinitSettings() {
   wkhtmltopdf_deinit();
 }
 
-void ConvertHtmlToPdf(char* html, char* page_height, char* page_width) {
-  SetGlobalSettings(page_height, page_width);
+void ConvertHtmlToPdf(char* html, v8::Local<v8::Object> page_info, v8::Local<v8::Object> file_info) {
+  SetGlobalSettings(page_info, file_info);
 
   object_settings = wkhtmltopdf_create_object_settings();
 
@@ -51,13 +53,19 @@ void CleanupObjects() {
   wkhtmltopdf_destroy_converter(converter);
 }
 
-void SetGlobalSettings(char* page_height, char* page_width) {
+void SetGlobalSettings(v8::Local<v8::Object> page_info, v8::Local<v8::Object> file_info) {
+  TO_CHAR_FROM_LOCAL(page_info, "pageHeight", page_height, page_height_local);
+  TO_CHAR_FROM_LOCAL(page_info, "pageWidth", page_width, page_width_local);
+  TO_CHAR_FROM_LOCAL(file_info, "fileName", file_name, file_name_local);
+  TO_CHAR_FROM_LOCAL(file_info, "path", path, path_local);
+
+  printf("%s", *file_name);
   global_settings = wkhtmltopdf_create_global_settings();
-  wkhtmltopdf_set_global_setting(global_settings, "out", "file.pdf");
+  wkhtmltopdf_set_global_setting(global_settings, "out", strcat(*path, *file_name));
   wkhtmltopdf_set_global_setting(global_settings, "margin.top", "0");
   wkhtmltopdf_set_global_setting(global_settings, "margin.bottom", "0");
   wkhtmltopdf_set_global_setting(global_settings, "margin.left", "0");
   wkhtmltopdf_set_global_setting(global_settings, "margin.right", "0");
-  wkhtmltopdf_set_global_setting(global_settings, "size.height", page_height);
-  wkhtmltopdf_set_global_setting(global_settings, "size.width", page_width);
+  wkhtmltopdf_set_global_setting(global_settings, "size.height", *page_height);
+  wkhtmltopdf_set_global_setting(global_settings, "size.width", *page_width);
 }

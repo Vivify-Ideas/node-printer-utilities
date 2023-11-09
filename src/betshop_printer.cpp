@@ -24,14 +24,13 @@ NAN_METHOD(sendToPrinter) {
   int job_id = 0;
 
   VALIDATE_AND_RETURN_STRING(info, 0, html);
-  VALIDATE_AND_RETURN_STRING(info, 1, page_height);
-  VALIDATE_AND_RETURN_STRING(info, 2, page_width);
-  VALIDATE_AND_RETURN_STRING(info, 3, paper_size);
-  VALIDATE_AND_RETURN_FUNCTION(info, 4, success_callback);
-  VALIDATE_AND_RETURN_FUNCTION(info, 5, error_callback);
+  VALIDATE_AND_RETURN_OBJECT(info, 1, page_info);
+  VALIDATE_AND_RETURN_OBJECT(info, 2, file_info);
+  VALIDATE_AND_RETURN_FUNCTION(info, 3, success_callback);
+  VALIDATE_AND_RETURN_FUNCTION(info, 4, error_callback);
 
-  ConvertHtmlToPdf(*html, *page_height, *page_width);
-  PrintPdfDocument(*paper_size, &job_id);
+  ConvertHtmlToPdf(*html, page_info, file_info);
+  PrintPdfDocument(page_info, &job_id, file_info);
 
   if (job_id == 0) {
     v8::Local<v8::Value> error_response(Nan::New<v8::String>("Error while printing.").ToLocalChecked());

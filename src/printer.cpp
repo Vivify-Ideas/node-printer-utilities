@@ -1,6 +1,7 @@
 #include "printer.h"
+#include <string.h>
 
-void PrintPdfDocument(char* papier_size, int* job_id) {
+void PrintPdfDocument(v8::Local<v8::Object> page_info, int* job_id, v8::Local<v8::Object> file_info) {
   cups_dest_t *dest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, NULL, NULL);
   if (dest == NULL) {
     printf("Default printer is not connected.\n");
@@ -9,12 +10,13 @@ void PrintPdfDocument(char* papier_size, int* job_id) {
 
   int num_options = 0;
   cups_option_t *options = NULL;
-
-  num_options = cupsAddOption(CUPS_MEDIA, papier_size, num_options, &options);
-  *job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, "file.pdf", "File", num_options, options);
+  TO_CHAR_FROM_LOCAL(page_info, "pageSize", papier_size, papier_size_local);
+  TO_CHAR_FROM_LOCAL(file_info, "fileName", file_name, file_name_local);
+  TO_CHAR_FROM_LOCAL(file_info, "path", path, path_local);
+  num_options = cupsAddOption(CUPS_MEDIA, *papier_size, num_options, &options);
+  *job_id = cupsPrintFile2(CUPS_HTTP_DEFAULT, dest->name, strcat(*path, *file_name), "File", num_options, options);
 
   cupsFreeOptions(num_options, options);
-  remove("file.pdf");
 }
 
 v8::Local<v8::String> GetJobStatus(int job_id, int cups_which_jobs = CUPS_WHICHJOBS_ALL) {
